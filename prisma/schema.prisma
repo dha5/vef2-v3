@@ -17,6 +17,16 @@ model Category {
 model Question {
   id         String  @id @default(uuid())
   content    String
-  category   Category @relation(fields: [categoryId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId String
+  answers Answer[]
+  @@index([categoryId])
+}
+
+model Answer {
+  id         String  @id @default(uuid())
+  content    String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId String
+  createdAt  DateTime @default(now())
 }
