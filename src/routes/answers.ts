@@ -17,6 +17,7 @@ answers.get("/question/:questionId", async (c) => {
 
         return question ? c.json(question.answers, 200) : c.json({ error: "Question not found"}, 404);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -47,6 +48,7 @@ answers.post("/", async (c) => {
 
         return c.json(newAnswer, 201);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -72,6 +74,7 @@ answers.patch("/:id", async (c) => {
 
         return c.json(updatedAnswer);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Answer not found" }, 404);
     }
 });
@@ -86,6 +89,7 @@ answers.delete("/:id", async (c) => {
         await prisma.answer.delete({ where: { id } });
         return c.newResponse(null, { status: 204 });
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 })

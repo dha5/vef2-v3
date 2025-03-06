@@ -12,6 +12,7 @@ questions.get("/", async (c) => {
         const allQuestions = await prisma.question.findMany({ include: { category: true } });
         return c.json(allQuestions, 200);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -24,6 +25,7 @@ questions.get("/:id", async (c) => {
 
         return question ? c.json(question, 200) : c.json({ error: "Question not found" }, 404);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -36,6 +38,7 @@ questions.get("/category/:slug", async (c) => {
 
         return category ? c.json(category.questions, 200) : c.json({ error: "Category not found" }, 404);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -65,6 +68,7 @@ questions.post("/", async (c) => {
         });
         return c.json(newQuestion, 201);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -86,6 +90,7 @@ questions.patch("/:id", async (c) => {
 
         return c.json(updatedQuestion);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Question not found" }, 404);
     }
 });
@@ -101,6 +106,7 @@ questions.delete("/:id", async (c) => {
         await prisma.question.delete({ where: { id } });
         return c.newResponse(null, { status: 204 });
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });

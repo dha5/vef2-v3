@@ -14,6 +14,7 @@ categories.get("/", async (c) => {
         const categories = await prisma.category.findMany({ include: { questions: true }});
         return c.json(categories, 200);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -26,6 +27,7 @@ categories.get("/:slug", async (c) => {
 
         return category ? c.json(category, 200) : c.json({ error: "Category not found" }, 404);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -47,6 +49,7 @@ categories.post("/", async (c) => {
         });
         return c.json(newCategory, 201);
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Internal Server Error" }, 500);
     }
 });
@@ -82,6 +85,7 @@ categories.delete("/:slug", async (c) => {
         await prisma.category.delete({ where: { slug }});
         return c.newResponse(null, { status: 204 });
     } catch (error) {
+        console.error("Error in route:", error);
         return c.json({ error: "Category not found" }, 404);
     }
 });
