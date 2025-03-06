@@ -90,6 +90,8 @@ questions.patch("/:id", async (c) => {
     }
 });
 
+
+//eyða spurningu
 questions.delete("/:id", async (c) => {
     const { id } = c.req.param();
     try {
